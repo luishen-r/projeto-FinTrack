@@ -26,7 +26,7 @@ public class Conexao {
     private static final String BANCO = "fintrack";
 
     private static final String USUARIO = "root";
-    private static final String SENHA = "SuaSenhaAqui";
+    private static final String SENHA = "senha";
 
     private static final String URL =
             "jdbc:mysql://" + HOST + ":" + PORTA + "/" + BANCO
