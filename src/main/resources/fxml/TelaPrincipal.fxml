@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ui.TelaPrincipalController"
+            prefWidth="720" prefHeight="520" styleClass="root-container">
+    <top>
+        <HBox spacing="10" alignment="CENTER_LEFT" styleClass="toolbar">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <Button text="Nova Transação" onAction="#abrirNovaTransacao" styleClass="botao-primario"/>
+            <Button text="Relatório" onAction="#abrirRelatorio"/>
+            <Button text="Remover Selecionada" onAction="#removerSelecionada"/>
+        </HBox>
+    </top>
+
+    <center>
+        <TableView fx:id="tabelaTransacoes">
+            <BorderPane.margin>
+                <Insets top="0" right="10" bottom="10" left="10"/>
+            </BorderPane.margin>
+            <columns>
+                <TableColumn fx:id="colunaData" text="Data" prefWidth="100"/>
+                <TableColumn fx:id="colunaDescricao" text="Descrição" prefWidth="260"/>
+                <TableColumn fx:id="colunaTipo" text="Tipo" prefWidth="100"/>
+                <TableColumn fx:id="colunaValor" text="Valor" prefWidth="150"/>
+            </columns>
+        </TableView>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER_LEFT" spacing="10" styleClass="rodape">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <Label fx:id="lblSaldo" text="Saldo atual: R$ 0,00" styleClass="saldo-label"/>
+        </HBox>
+    </bottom>
+</BorderPane>

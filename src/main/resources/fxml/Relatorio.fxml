@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="ui.RelatorioController"
+      spacing="15" prefWidth="320" styleClass="root-container">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Relatório Financeiro" styleClass="titulo"/>
+
+    <Label fx:id="lblTotalReceitas" text="Total de receitas: R$ 0,00"/>
+    <Label fx:id="lblTotalDespesas" text="Total de despesas: R$ 0,00"/>
+    <Label fx:id="lblSaldo" text="Saldo atual: R$ 0,00" styleClass="saldo-label"/>
+    <Label fx:id="lblQuantidade" text="Total de transações: 0"/>
+</VBox>

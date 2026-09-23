@@ -1,0 +1,62 @@
+
+.root-container {
+    -fx-background-color: #f4f6f8;
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+.toolbar {
+    -fx-background-color: #2f3b52;
+}
+
+.toolbar .button {
+    -fx-text-fill: white;
+    -fx-background-color: #44526b;
+    -fx-background-radius: 4;
+    -fx-padding: 6 14 6 14;
+}
+
+.toolbar .button:hover {
+    -fx-background-color: #556a8c;
+}
+
+.botao-primario {
+    -fx-background-color: #2e8b57;
+    -fx-text-fill: white;
+    -fx-background-radius: 4;
+    -fx-padding: 6 14 6 14;
+}
+
+.botao-primario:hover {
+    -fx-background-color: #3aa76d;
+}
+
+.rodape {
+    -fx-background-color: #eef1f4;
+    -fx-border-color: #d7dbe0;
+    -fx-border-width: 1 0 0 0;
+}
+
+.saldo-label {
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-text-fill: #2f3b52;
+}
+
+.titulo {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2f3b52;
+}
+
+.table-view {
+    -fx-font-size: 13px;
+}
+
+.table-view .column-header {
+    -fx-background-color: #2f3b52;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
