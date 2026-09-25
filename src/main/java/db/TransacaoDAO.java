@@ -4,7 +4,6 @@ import model.Transacao;
 import model.TransacaoMensal;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,12 +15,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Data Access Object responsavel por persistir e recuperar {@link Transacao}
- * (e suas subclasses, como {@link TransacaoMensal}) usando JDBC puro.
  * A classe NAO cria a tabela "transacoes" sozinha: quem abre a conexao
  * (Conexao, em produção, ou o proprio teste) e quem garante que o schema
  * exista, ja que a sintaxe de criacao de tabela muda entre bancos.
  */
+
 public class TransacaoDAO {
 
     private static final Logger LOGGER = Logger.getLogger(TransacaoDAO.class.getName());
@@ -55,6 +53,7 @@ public class TransacaoDAO {
     /**
      * Insere varias transacoes em uma unica transacao de banco de dados
      * (commit/rollback), garantindo que ou todas sejam gravadas, ou nenhuma.
+     * Demonstra o uso de controle transacional pedido no enunciado.
      */
     public List<TransacaoRegistro> inserirEmLote(List<Transacao> transacoes) throws SQLException {
         List<TransacaoRegistro> registros = new ArrayList<>();
@@ -160,7 +159,7 @@ public class TransacaoDAO {
         stmt.setString(1, transacao.getDescricao());
         stmt.setDouble(2, transacao.getValor());
         stmt.setString(3, transacao.getTipo());
-        stmt.setDate(4, Date.valueOf(transacao.getData()));
+        stmt.setString(4, transacao.getData().toString());
         stmt.setInt(5, isMensal ? 1 : 0);
 
         if (isMensal) {
@@ -175,7 +174,7 @@ public class TransacaoDAO {
         String descricao = rs.getString("descricao");
         double valor = rs.getDouble("valor");
         String tipo = rs.getString("tipo");
-        LocalDate data = rs.getDate("data").toLocalDate();
+        LocalDate data = LocalDate.parse(rs.getString("data"));
         boolean mensal = rs.getInt("mensal") == 1;
 
         Transacao transacao;
