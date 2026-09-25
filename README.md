@@ -1,6 +1,6 @@
 # FinTrack 💰
 
-O **FinTrack** é uma aplicação de gestão de finanças pessoais desenvolvida em Java. Nesta etapa (Unidade 5 | Capítulo 1 — Desenvolvimento do Projeto Intermediário), o projeto evoluiu de uma aplicação apenas de console para uma aplicação com **interface gráfica (JavaFX)**, **persistência em banco de dados relacional (JDBC/MySQL)**, uso de **Generics** e **testes automatizados com JUnit 5**.
+O **FinTrack** é uma aplicação de gestão de finanças pessoais desenvolvida em Java. Nesta etapa, o projeto evoluiu de uma aplicação apenas de console para uma aplicação com **interface gráfica (JavaFX)**, **persistência em banco de dados relacional (JDBC/MySQL)** e **testes automatizados com JUnit 5**.
 
 O projeto segue o padrão de diretórios do Maven (`src/main/java`), permitindo abrir/importar em qualquer IDE (IntelliJ, Eclipse, VS Code) como um projeto Maven, com as dependências gerenciadas via `pom.xml`.
 
