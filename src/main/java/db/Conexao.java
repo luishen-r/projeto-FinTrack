@@ -36,10 +36,6 @@ public class Conexao {
         // classe utilitaria, nao deve ser instanciada
     }
 
-    /**
-     * Abre uma nova conexao com o banco MySQL e garante que a tabela
-     * "transacoes" exista.
-     */
     public static Connection conectar() throws SQLException {
         try {
             Connection conexao = DriverManager.getConnection(URL, USUARIO, SENHA);

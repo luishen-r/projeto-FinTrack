@@ -46,10 +46,6 @@ public class TelaPrincipalController {
     private Connection conexao;
     private TransacaoDAO transacaoDAO;
 
-    /**
-     * Chamado automaticamente pelo FXMLLoader apos a injecao dos campos
-     * anotados com @FXML.
-     */
     public void initialize() {
         colunaData.setCellValueFactory(cell ->
                 new SimpleStringProperty(cell.getValue().getTransacao().getData().toString()));
@@ -149,10 +145,6 @@ public class TelaPrincipalController {
         alert.showAndWait();
     }
 
-    /**
-     * Fecha a conexao com o banco de dados. Deve ser chamado quando a
-     * janela principal for fechada (ver app.FinApp).
-     */
     public void encerrar() {
         if (conexao != null) {
             try {

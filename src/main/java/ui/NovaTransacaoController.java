@@ -19,11 +19,6 @@ import model.Transacao;
 import model.TransacaoMensal;
 import util.Validador;
 
-/**
- * Controller da tela de cadastro (NovaTransacao.fxml). Reaproveita as
- * mesmas regras de validacao (util.Validador) usadas pela versao console
- * (app.Main), evitando duplicacao de logica de negocio.
- */
 public class NovaTransacaoController {
 
     private static final Logger LOGGER = Logger.getLogger(NovaTransacaoController.class.getName());
@@ -53,11 +48,6 @@ public class NovaTransacaoController {
         checkMensal.selectedProperty().addListener((obs, valorAntigo, valorNovo) -> comboMes.setDisable(!valorNovo));
     }
 
-    /**
-     * Recebe o DAO ja conectado (aberto pela tela principal) e um callback
-     * a ser executado apos salvar com sucesso, usado para atualizar a
-     * tabela da tela principal.
-     */
     public void configurar(TransacaoDAO transacaoDAO, Runnable aoSalvar) {
         this.transacaoDAO = transacaoDAO;
         this.aoSalvar = aoSalvar;

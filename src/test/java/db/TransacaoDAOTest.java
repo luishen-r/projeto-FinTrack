@@ -18,12 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * Testes do TransacaoDAO usando SQLite em memoria. Nao depende de um
- * servidor MySQL rodando: a conexao e o schema (compativel com SQLite)
- * sao criados aqui mesmo, exclusivamente para os testes. Em produção
- * (ver db.Conexao) o banco continua sendo o MySQL.
- */
+
 class TransacaoDAOTest {
 
     private Connection conexao;

@@ -30,9 +30,7 @@ public class TransacaoDAO {
         this.conexao = conexao;
     }
 
-    /**
-     * Insere uma transacao no banco e retorna o registro ja com o id gerado.
-     */
+
     public TransacaoRegistro inserir(Transacao transacao) throws SQLException {
         String sql = "INSERT INTO transacoes (descricao, valor, tipo, data, mensal, mes) VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -50,11 +48,6 @@ public class TransacaoDAO {
         }
     }
 
-    /**
-     * Insere varias transacoes em uma unica transacao de banco de dados
-     * (commit/rollback), garantindo que ou todas sejam gravadas, ou nenhuma.
-     * Demonstra o uso de controle transacional pedido no enunciado.
-     */
     public List<TransacaoRegistro> inserirEmLote(List<Transacao> transacoes) throws SQLException {
         List<TransacaoRegistro> registros = new ArrayList<>();
         boolean autoCommitOriginal = conexao.getAutoCommit();
@@ -77,10 +70,6 @@ public class TransacaoDAO {
         }
     }
 
-    /**
-     * Retorna todas as transacoes cadastradas, ja reconstruidas como
-     * Transacao ou TransacaoMensal, conforme o que foi salvo.
-     */
     public List<TransacaoRegistro> listarTodas() throws SQLException {
         String sql = "SELECT id, descricao, valor, tipo, data, mensal, mes FROM transacoes ORDER BY id";
         List<TransacaoRegistro> registros = new ArrayList<>();
