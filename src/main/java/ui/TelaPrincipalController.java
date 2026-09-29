@@ -47,6 +47,8 @@ public class TelaPrincipalController {
     private TransacaoDAO transacaoDAO;
 
     public void initialize() {
+        tabelaTransacoes.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
         colunaData.setCellValueFactory(cell ->
                 new SimpleStringProperty(cell.getValue().getTransacao().getData().toString()));
         colunaDescricao.setCellValueFactory(cell ->
