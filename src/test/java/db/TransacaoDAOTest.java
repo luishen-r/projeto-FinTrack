@@ -102,6 +102,43 @@ class TransacaoDAOTest {
     }
 
     @Test
+    void atualizarDeveModificarOsDadosDaTransacao() throws SQLException {
+        TransacaoRegistro registro = dao.inserir(new Transacao("Mercado", 300.0, "despesa", LocalDate.of(2026, 9, 8)));
+
+        Transacao atualizada = new Transacao("Mercado (corrigido)", 350.0, "despesa", LocalDate.of(2026, 9, 9));
+        dao.atualizar(atualizada, registro.getId());
+
+        TransacaoRegistro encontrado = dao.buscarPorId(registro.getId());
+
+        assertNotNull(encontrado);
+        assertEquals("Mercado (corrigido)", encontrado.getTransacao().getDescricao());
+        assertEquals(350.0, encontrado.getTransacao().getValor(), 0.0001);
+        assertEquals(LocalDate.of(2026, 9, 9), encontrado.getTransacao().getData());
+    }
+
+    @Test
+    void atualizrMantendoOMesmoIdNaoDeveCriarUmNovoRegistro() throws SQLException {
+        dao.inserir(new Transacao("Salario", 1613.0, "receita", LocalDate.of(2026, 9, 10)));
+        TransacaoRegistro registro = dao.inserir(new Transacao("Mercado", 300.0, "despesa", LocalDate.of(2026, 9, 8)));
+
+        dao.atualizar(new Transacao("Mercado atualizado", 320.0, "despesa", LocalDate.of(2026, 9, 8)), registro.getId());
+
+        assertEquals(2, dao.listarTodas().size());
+    }
+
+    @Test
+    void atualizarDevePermitirTransformarEmTrasacaoMensal() throws SQLException {
+        TransacaoRegistro registro = dao.inserir(new Transacao("Mercado", 300.0, "despesa", LocalDate.of(2026, 9, 8)));
+
+        TransacaoMensal atualizada = new TransacaoMensal(10, "Internet", 100.0, "despesa", LocalDate.of(2026, 9, 10));
+        dao.atualizar(atualizada, registro.getId());
+
+        TransacaoRegistro encontrado = dao.buscarPorId(registro.getId());
+        assertTrue(encontrado.getTransacao() instanceof TransacaoMensal);
+        assertEquals(10, ((TransacaoMensal) encontrado.getTransacao()).getMes());
+    }
+
+    @Test
     void removerDeveExcluirATransacaoDoBanco() throws SQLException {
         TransacaoRegistro registro = dao.inserir(new Transacao("Mercado", 300.0, "despesa", LocalDate.of(2026, 9, 8)));
 

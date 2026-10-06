@@ -12,6 +12,7 @@
                 <Insets top="10" right="10" bottom="10" left="10"/>
             </padding>
             <Button text="Nova Transação" onAction="#abrirNovaTransacao" styleClass="botao-primario"/>
+            <Button text="Editar Selecionada" onAction="#editarSelecionada"/>
             <Button text="Relatório" onAction="#abrirRelatorio"/>
             <Button text="Remover Selecionada" onAction="#removerSelecionada"/>
         </HBox>

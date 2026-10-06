@@ -6,14 +6,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import db.TransacaoDAO;
+import db.TransacaoRegistro;
 import exceptions.EntradaInvalidaException;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Transacao;
 import model.TransacaoMensal;
@@ -23,6 +20,8 @@ public class NovaTransacaoController {
 
     private static final Logger LOGGER = Logger.getLogger(NovaTransacaoController.class.getName());
 
+    @FXML private Label lblTitulo;
+    @FXML private Button btnSalvar;
     @FXML private TextField campoDescricao;
     @FXML private TextField campoValor;
     @FXML private ComboBox<String> comboTipo;
@@ -32,6 +31,7 @@ public class NovaTransacaoController {
 
     private TransacaoDAO transacaoDAO;
     private Runnable aoSalvar;
+    private TransacaoRegistro registroEmEdicao;
 
     public void initialize() {
         comboTipo.getItems().addAll("Receita", "Despesa");
@@ -51,6 +51,7 @@ public class NovaTransacaoController {
     public void configurar(TransacaoDAO transacaoDAO, Runnable aoSalvar) {
         this.transacaoDAO = transacaoDAO;
         this.aoSalvar = aoSalvar;
+        this.registroEmEdicao = null;
     }
 
     @FXML
@@ -74,7 +75,11 @@ public class NovaTransacaoController {
                 transacao = new Transacao(descricao, valor, tipo, data);
             }
 
-            transacaoDAO.inserir(transacao);
+            if (registroEmEdicao != null) {
+                transacaoDAO.atualizar(transacao, registroEmEdicao.getId());
+            } else {
+                transacaoDAO.inserir(transacao);
+            }
 
             if (aoSalvar != null) {
                 aoSalvar.run();
@@ -91,6 +96,31 @@ public class NovaTransacaoController {
         }
     }
 
+    public void configurarParaEdicao(TransacaoDAO transacaoDAO, Runnable aoSalvar, TransacaoRegistro registro) {
+        this.registroEmEdicao = registro;
+        this.aoSalvar = aoSalvar;
+        this.transacaoDAO = transacaoDAO;
+
+        Transacao transacao = registro.getTransacao();
+
+        campoDescricao.setText(transacao.getDescricao());
+        campoValor.setText(String.valueOf(transacao.getValor()));
+        comboTipo.setValue(capitalizar(transacao.getTipo()));
+        seletorData.setValue(transacao.getData());
+
+        if (transacao instanceof TransacaoMensal transacaoMensal) {
+            checkMensal.setSelected(true);
+            comboMes.setDisable(false);
+            comboMes.setValue(transacaoMensal.getMes());
+        } else {
+            checkMensal.setSelected(false);
+            comboMes.setDisable(true);
+        }
+
+        lblTitulo.setText("Editar Transação");
+        btnSalvar.setText("Atualizar");
+    }
+
     @FXML
     private void cancelar() {
         fecharJanela();
@@ -105,5 +135,12 @@ public class NovaTransacaoController {
         Alert alert = new Alert(AlertType.ERROR, mensagem);
         alert.setHeaderText(null);
         alert.showAndWait();
+    }
+
+    private String capitalizar(String texto) {
+        if (texto == null || texto.isEmpty()) {
+            return texto;
+        }
+        return texto.substring(0, 1).toUpperCase() + texto.substring(1).toLowerCase();
     }
 }

@@ -48,6 +48,19 @@ public class TransacaoDAO {
         }
     }
 
+    public void atualizar(Transacao transacao, int id) throws SQLException {
+        String sql = "UPDATE transacoes SET descricao = ?, valor = ?, tipo = ?, data = ?, mensal = ?, mes = ? WHERE id = ?";
+
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            preencherParametros(stmt, transacao);
+            stmt.setInt(7, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Falha ao atualizar transacao: " + transacao.getDescricao(), e);
+            throw e;
+        }
+    }
+
     public List<TransacaoRegistro> inserirEmLote(List<Transacao> transacoes) throws SQLException {
         List<TransacaoRegistro> registros = new ArrayList<>();
         boolean autoCommitOriginal = conexao.getAutoCommit();

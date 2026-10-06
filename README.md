@@ -13,6 +13,7 @@ O projeto segue o padrão de diretórios do Maven (`src/main/java`), permitindo 
 - **📋 Listar Transações:** exibição do histórico completo de movimentações.
 - **📊 Saldo e Relatório:** cálculo do saldo consolidado (Receitas − Despesas) e uma tela de relatório com totais.
 - **💱 Formatação de Moeda:** valores exibidos no padrão brasileiro (`R$`) via `Locale`.
+- **✏️ Editar Transação (JavaFX):** reaproveita a mesma tela de cadastro, já pré-preenchida com os dados atuais. Acessível pelo botão "Editar Selecionada" ou por duplo-clique na linha da tabela.
 - **❌ Excluir Transação:** remoção de registros específicos.
 - **🗄️ Persistência em Banco de Dados:** tudo salvo em MySQL via JDBC.
 

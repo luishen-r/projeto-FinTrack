@@ -16,11 +16,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import util.Formatador;
@@ -58,6 +55,16 @@ public class TelaPrincipalController {
         colunaValor.setCellValueFactory(cell ->
                 new SimpleStringProperty(Formatador.formatarMoeda(cell.getValue().getTransacao().getValor())));
 
+        tabelaTransacoes.setRowFactory(tv -> {
+            TableRow<TransacaoRegistro> linha = new TableRow<>();
+            linha.setOnMouseClicked(evento -> {
+                if (evento.getClickCount() == 2 && !linha.isEmpty()) {
+                    abrirFormularioEdicao(linha.getItem());
+                }
+            });
+            return linha;
+        });
+
         tabelaTransacoes.setItems(dados);
 
         try {
@@ -89,6 +96,39 @@ public class TelaPrincipalController {
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Falha ao abrir tela de nova transação", e);
             mostrarErro("Não foi possível abrir a tela de nova transação.");
+        }
+    }
+
+    @FXML
+    private void editarSelecionada() {
+        TransacaoRegistro selecionado = tabelaTransacoes.getSelectionModel().getSelectedItem();
+
+        if (selecionado == null) {
+            mostrarErro("Selecione uma transação na tabela para editar.");
+            return;
+        }
+
+        abrirFormularioEdicao(selecionado);
+    }
+
+    private void abrirFormularioEdicao(TransacaoRegistro selecionado) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/NovaTransacao.fxml"));
+            Parent root = loader.load();
+
+            NovaTransacaoController controller = loader.getController();
+            controller.configurarParaEdicao(transacaoDAO, this::carregarDados, selecionado);
+
+            Stage stage = new Stage();
+            stage.setTitle("Editar Transação");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("/css/style.css").toExternalForm());
+            stage.setScene(scene);
+            stage.showAndWait();
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Falha ao abrir a tela de edição", e);
+            mostrarErro("Não foi possível abrir a tela de edição.");
         }
     }
 
